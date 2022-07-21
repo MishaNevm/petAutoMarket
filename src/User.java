@@ -1,8 +1,13 @@
 import java.io.*;
 import java.util.*;
 
-public class User {
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1192947544117862512L;
     Scanner scan = new Scanner(System.in);
+    private static int id = 1;
+    private int userId;
     private String name;
     private String city;
     private long phoneNumber;
@@ -18,14 +23,14 @@ public class User {
     }
 
     public User() throws IOException {
+        userId = id;
+        id++;
         setName();
-        System.out.print("Введите ваш город: ");
-        city = scan.nextLine();
-        System.out.print("Введите ваш номер телефона: +7");
-        phoneNumber = scan.nextInt();
+        setCity();
+        setPhoneNumber();
         usersDir = new File("Users");
         usersDir.mkdir();
-        userFile = new File(usersDir + name + phoneNumber + ".bin");
+        userFile = new File(usersDir + "user" +userId + ".bin");
         if (userFile.exists()) {
             userFile.createNewFile();
         }
@@ -33,12 +38,14 @@ public class User {
         ois = new ObjectInputStream(new FileInputStream(userFile));
     }
 
-    public ObjectInputStream getOis() {
-        return ois;
+    public void whiteUserObject (User user) throws IOException {
+        oos.writeObject(user);
+        oos.close();
     }
 
-    public ObjectOutputStream getOos() {
-        return oos;
+    public User readUserObject() throws IOException, ClassNotFoundException {
+        User user = (User) ois.readObject();
+        return user;
     }
 
     public void setName() {
@@ -97,5 +104,9 @@ public class User {
 
     public long getPhoneNumber() {
         return phoneNumber;
+    }
+    
+    public String toString () {
+        return name + " " + id + " " + city + " " + phoneNumber; 
     }
 }
