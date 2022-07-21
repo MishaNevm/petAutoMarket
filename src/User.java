@@ -75,10 +75,15 @@ public class User {
     }
 
     public void setPhoneNumber() {
-        System.out.print("Введите Ваш номер телефона : +7");
-        phoneNumber = scan.nextLong();
-        if (10 != String.valueOf(phoneNumber).length()) {
-            setPhoneNumber();
+        try {
+            System.out.print("Введите Ваш номер телефона: +7");
+            phoneNumber = scan.nextLong();
+            if (String.valueOf(phoneNumber).length() != 10) {
+                System.out.println("Некорректный ввод");
+                setPhoneNumber();
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Error 101");
         }
     }
 
