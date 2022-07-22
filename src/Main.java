@@ -1,9 +1,9 @@
-import java.io.IOException;
-import java.io.Serializable;
 
-public class Main implements Serializable {
-    public static void main(String[] args)  throws IOException, ClassNotFoundException {
+public class Main {
+    public static void main(String[] args)  {
         User user1 = new User();
-        User.whiteUserObject(user1);
+        User.writeUserObject(user1);
+        User user2 = User.readUserObject(1);
+        System.out.println(user2);
     }
 }
