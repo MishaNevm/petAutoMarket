@@ -10,7 +10,7 @@ public class User implements Serializable {
     private String name;
     private String city;
     private long phoneNumber;
-    static File usersDir = new File("Users");
+    private static final File usersDir = new File("Users");
     File userFile;
     public static String separator = File.separator;
 
