@@ -3,9 +3,9 @@ import java.util.*;
 
 public class User implements Serializable {
     @Serial
-    private static final long serialVersionUID = 6261599112809210093L;
+    private static final long serialVersionUID = -2792519078096605307L;
     static Scanner scan = new Scanner(System.in);
-    private static int id = 1;
+    private static transient int id = 1;
     private final int userId;
     private String name;
     private String city;
@@ -13,6 +13,7 @@ public class User implements Serializable {
     private static final File usersDir = new File("Users");
     File userFile;
     public static String separator = File.separator;
+    private int daysOnSite = 0;
 
 
     public User() {
@@ -21,6 +22,7 @@ public class User implements Serializable {
         setName();
         setCity();
         setPhoneNumber();
+        daysOnSiteCounter.start();
     }
 
 
@@ -31,6 +33,17 @@ public class User implements Serializable {
             setName();
         }
     }
+    
+    Thread daysOnSiteCounter = new Thread(() -> {
+        for (int i = 0; i < 36500; i++){
+            try {
+                Thread.sleep(86400000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            daysOnSite++;
+        }
+    });
 
     public void setCity(){
         ArrayList<String> cityArray = new ArrayList<>();
@@ -86,6 +99,9 @@ public class User implements Serializable {
 
     public int getId() {
         return userId;
+    }
+    public int getDaysOnSite () {
+        return daysOnSite;
     }
 
     public String toString() {
